@@ -1,0 +1,50 @@
+body {
+  background-color: rgb(3, 68, 121);
+}
+.location {
+  font-family: "Signika Negative", sans-serif;
+  font-weight: 600;
+}
+
+.weatherdescription,
+.display1,
+.hum-percentage,
+.d-percentage,
+h5,
+.hour1,
+.hour1-temp,
+.hour2,
+.hour2-temp,
+.hour3,
+.hour3-temp,
+.hour4,
+.hour4-temp,
+.hour5,
+.hour5-temp,
+.hour6,
+.hour6-temp,
+.day1,
+.day2,
+.day3,
+.day4,
+.day5,
+.text-end-degrees,
+.date,
+.units {
+  font-family: "Signika Negative", sans-serif;
+}
+.day3,
+.day4 {
+  color: rgb(121, 196, 246);
+}
+.coder {
+  font-family: "Signika Negative", sans-serif;
+}
+
+.units {
+  list-style: none;
+}
+
+.f-c {
+  color: black;
+}
