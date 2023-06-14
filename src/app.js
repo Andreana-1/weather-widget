@@ -35,7 +35,7 @@ function displayWeather(response) {
   let temp = document.querySelector("#wrapper-temp");
   let localHumidity = response.data.main.humidity;
   let humidity = document.querySelector("#humidity");
-  let tempFeeling = response.data.main.feels_like;
+  let tempFeeling = Math.round(response.data.main.feels_like);
   let feeling = document.querySelector("#temp-feeling");
   temp.innerHTML = `${localTemp}`;
   humidity.innerHTML = `${localHumidity}`;
