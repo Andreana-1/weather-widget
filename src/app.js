@@ -9,7 +9,6 @@ if (minutes < 10) {
   minutes = `0${minutes}`;
 }
 
-let seconds = date.getSeconds();
 let days = [
   "Monday",
   "Tuesday",
@@ -20,7 +19,7 @@ let days = [
   "Sunday",
 ];
 let day = days[date.getDay()];
-h2.innerHTML = `${day} ${hours}:${minutes}:${seconds}`;
+h2.innerHTML = `${day} ${hours}:${minutes}`;
 
 function displayWeather(response) {
   console.log(response);
@@ -37,9 +36,11 @@ function displayWeather(response) {
   let humidity = document.querySelector("#humidity");
   let tempFeeling = Math.round(response.data.main.feels_like);
   let feeling = document.querySelector("#temp-feeling");
+  let iconElement = document.querySelector("#icon");
   temp.innerHTML = `${localTemp}`;
   humidity.innerHTML = `${localHumidity}`;
   feeling.innerHTML = `${tempFeeling}`;
+  iconElement.innerHTML = `http://openweathermap.org/img/wn/09n@2x.png`;
 }
 function search(event) {
   event.preventDefault();
