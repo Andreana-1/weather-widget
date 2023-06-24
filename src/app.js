@@ -37,11 +37,18 @@ function displayWeather(response) {
   let tempFeeling = Math.round(response.data.main.feels_like);
   let feeling = document.querySelector("#temp-feeling");
   let iconElement = document.querySelector("#main-icon");
-  let mainIcon = `http://openweathermap.org/img/wn/09n@2x.png`;
+  let maxTemp = Math.round(response.data.main.temp_max);
+  let highTemps = document.querySelector("#temp-max");
+
+  highTemps.innerHTML = `${maxTemp}`;
   temp.innerHTML = `${localTemp}`;
   humidity.innerHTML = `${localHumidity}`;
   feeling.innerHTML = `${tempFeeling}`;
-  iconElement.innerHTML = `testing ${mainIcon}`;
+  iconElement.setAttribute(
+    "src",
+    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
+  iconElement.setAttribute("alt", response.data.weather[0].description);
 }
 function search(event) {
   event.preventDefault();
