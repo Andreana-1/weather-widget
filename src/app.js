@@ -36,11 +36,12 @@ function displayWeather(response) {
   let humidity = document.querySelector("#humidity");
   let tempFeeling = Math.round(response.data.main.feels_like);
   let feeling = document.querySelector("#temp-feeling");
-  let iconElement = document.querySelector("#icon");
+  let iconElement = document.querySelector("#main-icon");
+  let mainIcon = `http://openweathermap.org/img/wn/09n@2x.png`;
   temp.innerHTML = `${localTemp}`;
   humidity.innerHTML = `${localHumidity}`;
   feeling.innerHTML = `${tempFeeling}`;
-  iconElement.innerHTML = `http://openweathermap.org/img/wn/09n@2x.png`;
+  iconElement.innerHTML = `testing ${mainIcon}`;
 }
 function search(event) {
   event.preventDefault();
