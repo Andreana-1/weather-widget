@@ -21,6 +21,39 @@ let days = [
 let day = days[date.getDay()];
 h2.innerHTML = `${day} ${hours}:${minutes}`;
 
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+
+  let forecastHTML = "";
+  let days = ["Thursday", "Friday", "Saturday", "Sunday", "Monday"];
+  days.forEach(function (day) {
+    forecastHTML = `${forecastHTML} <div class="row align-items-center">
+                  <div class="col-lg-6">
+                    <span>
+                      <strong class="day1 d-block mb-4">${day}</strong></span
+                    >
+                  </div>
+                  <div class="col-lg-2 text-center">
+                    <img
+                      id="wrapper-icon-thursday"
+                      src="src/img/icons8-sun.png"
+                      class="wrapper1 mb-4"
+                      alt="weather"
+                      width="30"
+                    />
+                  </div>
+                  <div class="col-lg-4 text-end">
+                    <span
+                      id="wrapper-forecast-temp-thursday"
+                      class="text-end-degrees mb-4"
+                      >72&deg;</span
+                    >
+                  </div>
+                </div>`;
+  });
+  forecastElement.innerHTML = `${forecastHTML}`;
+}
+
 function displayWeather(response) {
   console.log(response);
   document.querySelector("#city-now").innerHTML = response.data.name;
@@ -117,3 +150,4 @@ function convertToFahrenheit(event) {
   let fahrenheitLink = document.querySelector("#fahrenheit-link");
   fahrenheitLink.addEventListener("click", convertToFahrenheit);
 }
+displayForecast();
