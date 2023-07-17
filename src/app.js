@@ -10,52 +10,72 @@ if (minutes < 10) {
 }
 
 let days = [
+  "Sunday",
   "Monday",
   "Tuesday",
   "Wednesday",
   "Thursday",
   "Friday",
   "Saturday",
-  "Sunday",
 ];
 let day = days[date.getDay()];
 h2.innerHTML = `${day} ${hours}:${minutes}`;
 
-function displayForecast() {
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
+  return days[day];
+}
+
+function displayForecast(response) {
+  let forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
 
   let forecastHTML = "";
-  let days = ["Thursday", "Friday", "Saturday", "Sunday", "Monday"];
-  days.forEach(function (day) {
-    forecastHTML = `${forecastHTML} <div class="row align-items-center">
-                  <div class="col-lg-6">
-                    <span>
-                      <strong class="day1 d-block mb-4">${day}</strong></span
-                    >
-                  </div>
-                  <div class="col-lg-2 text-center">
-                    <img
-                      id="wrapper-icon-thursday"
-                      src="src/img/icons8-sun.png"
-                      class="wrapper1 mb-4"
-                      alt="weather"
-                      width="30"
-                    />
-                  </div>
-                  <div class="col-lg-4 text-end">
-                    <span
-                      id="wrapper-forecast-temp-thursday"
-                      class="text-end-degrees mb-4"
-                      >72&deg;</span
-                    >
-                  </div>
-                </div>`;
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `<div class="row align-items-center">
+<div class="col-lg-6">
+<span>
+<strong class="day1 d-block mb-4">${formatDay(forecastDay.dt)}</strong></span>
+</div>
+<div class="col-lg-2 text-center">
+<img
+id="wrapper-icon-thursday"
+src="http://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png"
+class="wrapper1 mb-4"
+alt="weather"
+width="30"
+/>
+</div>
+<div class="col-lg-4 text-end">
+<span
+id="wrapper-forecast-temp-thursday"
+class="text-end-degrees mb-4"
+>${Math.round(forecastDay.temp.max)}&deg/${Math.round(
+          forecastDay.temp.min
+        )}&deg </span
+>
+</div>
+</div>
+`;
+    }
   });
   forecastElement.innerHTML = `${forecastHTML}`;
 }
 
+function getForecast(coordinates) {
+  console.log(coordinates);
+  let apiKey = "a2dda52dce059eb8a14e95aaa0db6ab7";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  console.log(apiUrl);
+  axios.get(apiUrl).then(displayForecast);
+}
+
 function displayWeather(response) {
-  console.log(response);
   document.querySelector("#city-now").innerHTML = response.data.name;
   document.querySelector("#wrapper-temp").innerHTML = `${Math.round(
     response.data.main.temp
@@ -89,14 +109,8 @@ function displayWeather(response) {
     `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
   );
   iconElement.setAttribute("alt", response.data.weather[0].description);
-}
-function search(event) {
-  event.preventDefault();
-  let apiKey = "a2dda52dce059eb8a14e95aaa0db6ab7";
-  let city = document.querySelector("#city-input").value;
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-  axios.get(apiUrl).then(displayWeather);
+  getForecast(response.data.coord);
 }
 
 function searchCity(city) {
@@ -122,7 +136,6 @@ function searchMyLocation(position) {
 
   axios.get(apiUrl).then(displayWeather);
 }
-
 function getCurrentPosition() {
   navigator.geolocation.getCurrentPosition(searchMyLocation);
 }
@@ -150,4 +163,3 @@ function convertToFahrenheit(event) {
   let fahrenheitLink = document.querySelector("#fahrenheit-link");
   fahrenheitLink.addEventListener("click", convertToFahrenheit);
 }
-displayForecast();
