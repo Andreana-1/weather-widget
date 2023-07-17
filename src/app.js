@@ -83,27 +83,18 @@ function displayWeather(response) {
 
   document.querySelector("#description").innerHTML =
     response.data.weather[0].main;
-  let localTemp = Math.round(response.data.main.temp);
-  let temp = document.querySelector("#wrapper-temp");
-  let localHumidity = response.data.main.humidity;
-  let humidity = document.querySelector("#humidity");
-  let tempFeeling = Math.round(response.data.main.feels_like);
-  let feeling = document.querySelector("#temp-feeling");
+  let temperatureElement = document.querySelector("#wrapper-temp");
+  let humidityElement = document.querySelector("#humidity");
+  let feelingElement = document.querySelector("#temp-feeling");
   let iconElement = document.querySelector("#main-icon");
-  let maxTemp = Math.round(response.data.main.temp_max);
-  let highTemps = document.querySelector("#temp-max");
-  let celsius = document.querySelector("#wrapper-temp");
-  let celsiusConversion = Math.round(response.data.main.temp);
-  let fahrenheit = document.querySelector("#wrapper-temp");
-  let fahrenheitConversion = Math.round(response.data.main.temp);
+  let maxTempElement = document.querySelector("#temp-max");
 
-  fahrenheit.innerHTML = `${fahrenheitConversion}`;
+  let celsiusTemperature = Math.round(response.data.main.temp);
 
-  celsius.innerHTML = `${celsiusConversion}`;
-  highTemps.innerHTML = `${maxTemp}`;
-  temp.innerHTML = `${localTemp}`;
-  humidity.innerHTML = `${localHumidity}`;
-  feeling.innerHTML = `${tempFeeling}`;
+  temperatureElement.innerHTML = Math.round(celsiusTemperature);
+  maxTempElement.innerHTML = Math.round(response.data.main.temp_max);
+  humidityElement.innerHTML = response.data.main.humidity;
+  feelingElement.innerHTML = Math.round(response.data.main.feels_like);
   iconElement.setAttribute(
     "src",
     `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
@@ -142,24 +133,3 @@ function getCurrentPosition() {
 
 let locationButton = document.querySelector("#current-location");
 locationButton.addEventListener("click", getCurrentPosition);
-
-function convertToCelsius(event) {
-  event.preventDefault();
-  let temperatureElement = document.querySelector("#wrapper-temp");
-  temperatureElement.innerHTML = `${celsiusConversion}`;
-}
-
-function convertToFahrenheit(event) {
-  event.preventDefault();
-  let temperatureElement = document.querySelector("#wrapper-temp");
-  temperatureElement.innerHTML = `${fahrenheitConversion}`;
-}
-
-{
-  let celsiusLink = document.querySelector("#celsius-link");
-  celsiusLink.addEventListener("click", convertToCelsius);
-}
-{
-  let fahrenheitLink = document.querySelector("#fahrenheit-link");
-  fahrenheitLink.addEventListener("click", convertToFahrenheit);
-}
